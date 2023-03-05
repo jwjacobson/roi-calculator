@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from termcolor import cprint
 
 class Property():
     
@@ -28,8 +29,9 @@ class Property():
                 continue
             else:
                 expense = input("How much? ")
-                while expense.isdigit() == False:
-                    expense = input("Price must be an integer. Try again. ")
+                while expense.isdigit() == False or int(expense) < 1:
+                    cprint("\nValue must be a positive integer. Try again.", "red", attrs=["bold"] )
+                    expense = input("\nHow much? ")
                 self.monthly_expenses += int(expense)
         return self.monthly_expenses
     
@@ -50,9 +52,17 @@ class Property():
                 continue
             else:
                 investment = input("How much? ")
-                while investment.isdigit() == False:
-                    investment = input("Price must be an integer. Try again. ")
+                while investment.isdigit() == False or int(investment) < 1:
+                    cprint("\nValue must be a positive integer. Try again.", "red", attrs=["bold"] )
+                    investment = input("\nHow much? ")
                 self.initial_investment += int(investment)
+        while self.initial_investment == 0:
+                cprint("\nInitial investment cannot be 0 (produces infinite return)", "red", attrs=["bold"])
+                self.initial_investment = input("\nHow much did you really invest? ")
+                while self.initial_investment.isdigit() == False or int(self.initial_investment) < 1:
+                    cprint("\nValue must be a positive integer. Try again.", "red", attrs=["bold"] )
+                    self.initial_investment = input("\nHow much did you really invest? ")
+                self.initial_investment = int(self.initial_investment)
         return self.initial_investment
 
     def get_roi(self):
@@ -62,15 +72,19 @@ class Property():
         return self.roi
 
 def run_calc():
-    print("* * * Rental Property ROI Calculator (RPROIC) * * *")
-    price = input("\nHow much will you pay for the property? ")
-    while price.isdigit() == False:
-        price = input("Price must be an integer. Try again. ")
+    cprint("#"*42, "light_cyan")
+    cprint("# * * Rental Property ROI Calculator * * #", "magenta", attrs=["bold"])
+    cprint("#"*42, "light_cyan")
+    price = input("\nWhat is the market value of the property? ")
+    while price.isdigit() == False or int(price) < 1:
+        cprint("\nValue must be a positive integer. Try again.", "red", attrs=["bold"] )
+        price = input("\nWhat is the market value of the property? ")
     property = Property(int(price))
-    print(f"\nBased on the price of the property, you can expect a monthly income of {property.get_monthly_income()}.")
+    print(f"\nBased on the the property's market value, you can expect a monthly income of {property.get_monthly_income()}.")
     print(f"\nYour monthly expenses are {property.get_expenses()}.")
     print(f"\nYour monthly cashflow is {property.get_cash_flow()}.")
     print(f"\nYour initial investment is {property.get_investment()}.")
     print(f"\nYour cash on cash return is {property.get_roi()} percent.")
 
 run_calc()
+
