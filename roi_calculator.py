@@ -3,7 +3,7 @@ import time
 import sys
 from prettytable.colortable import ColorTable, Themes
 
-#Character-by-character printing for analog effect
+# Character-by-character printing for analog effect
 # source: https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line 
 def sprint1(s):
     for c in s:
@@ -17,11 +17,11 @@ def sprint2(s):
         sys.stdout.flush()
         time.sleep(0.008)
 
-# Rest adds time between execution of commands for more natural user experience 
+# Rest adds time between execution of commands for more human-scale timing 
 def rest(x):
     time.sleep(x*0.5)
 
-# adapted from https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
+# Fake progres bar, adapted from https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html
 def loading():
     for i in range(0, 100):
         time.sleep(0.025)
